@@ -1,0 +1,553 @@
+<!-- Fullman Firm — Firm vs. Debt Settlement Companies Comparison -->
+<!-- Paste this into a WordPress Custom HTML block -->
+<div id="ff-compare-root">
+<style>
+  #ff-compare-root {
+    --ff-prime: #084b52;
+    --ff-prime-dark: #063a40;
+    --ff-second: #facb86;
+    --ff-second-light: #fde8c8;
+    --ff-tert: #6a6a6a;
+    --ff-quint: #e6eced;
+    --ff-white: #ffffff;
+    --ff-red: #d9534f;
+    --ff-red-bg: #fdf0f0;
+    --ff-green: #28a745;
+    --ff-green-bg: #f0faf3;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  #ff-compare-root *, #ff-compare-root *::before, #ff-compare-root *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* === Section === */
+  .ff-cmp {
+    background: var(--ff-quint);
+    padding: 72px 24px;
+  }
+
+  /* === Header === */
+  .ff-cmp__header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 48px;
+  }
+  .ff-cmp__badge {
+    display: inline-block;
+    background: var(--ff-white);
+    color: var(--ff-prime);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .ff-cmp__heading {
+    font-family: 'Halant', Georgia, serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--ff-prime);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .ff-cmp__heading em {
+    color: var(--ff-second);
+    font-style: normal;
+    text-decoration: underline;
+    text-decoration-color: var(--ff-second);
+    text-underline-offset: 4px;
+  }
+  .ff-cmp__subheading {
+    font-size: 16px;
+    color: var(--ff-tert);
+    line-height: 1.6;
+  }
+
+  /* === Table Container === */
+  .ff-cmp__table-wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    background: var(--ff-white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(8,75,82,0.08);
+  }
+
+  /* === Table Header === */
+  .ff-cmp__thead {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr;
+    background: var(--ff-prime);
+  }
+  .ff-cmp__thead-cell {
+    padding: 20px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .ff-cmp__thead-cell:first-child {
+    justify-content: flex-start;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+  }
+  .ff-cmp__thead-cell--them {
+    background: rgba(0,0,0,0.1);
+    color: rgba(255,255,255,0.6);
+  }
+  .ff-cmp__thead-cell--us {
+    background: rgba(250,203,134,0.15);
+    color: var(--ff-second);
+    position: relative;
+  }
+  .ff-cmp__winner-tag {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ff-second);
+    color: var(--ff-prime);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 3px 14px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* === Rows === */
+  .ff-cmp__row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr;
+    border-bottom: 1px solid var(--ff-quint);
+    transition: background 0.2s ease;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s ease;
+  }
+  .ff-cmp__row--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .ff-cmp__row:last-child {
+    border-bottom: none;
+  }
+  .ff-cmp__row:hover {
+    background: rgba(230,236,237,0.3);
+  }
+
+  .ff-cmp__cell {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+  }
+
+  /* Category cell */
+  .ff-cmp__cell--category {
+    font-weight: 700;
+    color: var(--ff-prime);
+    font-size: 15px;
+  }
+  .ff-cmp__cell--category svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    fill: var(--ff-prime);
+    opacity: 0.5;
+  }
+
+  /* Them cell */
+  .ff-cmp__cell--them {
+    color: var(--ff-tert);
+    background: rgba(217,83,79,0.02);
+    justify-content: center;
+    text-align: center;
+  }
+  .ff-cmp__mark--bad {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ff-red);
+    font-weight: 600;
+  }
+  .ff-cmp__mark--bad::before {
+    content: '✗';
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--ff-red-bg);
+    color: var(--ff-red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Us cell */
+  .ff-cmp__cell--us {
+    background: rgba(250,203,134,0.04);
+    justify-content: center;
+    text-align: center;
+  }
+  .ff-cmp__mark--good {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ff-prime);
+    font-weight: 600;
+  }
+  .ff-cmp__mark--good::before {
+    content: '✓';
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--ff-green-bg);
+    color: var(--ff-green);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* === Tooltip === */
+  .ff-cmp__tip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ff-prime);
+    color: var(--ff-white);
+    font-size: 12px;
+    font-weight: 400;
+    padding: 10px 14px;
+    border-radius: 8px;
+    max-width: 260px;
+    line-height: 1.5;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    z-index: 10;
+    text-align: left;
+    pointer-events: none;
+  }
+  .ff-cmp__tip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--ff-prime);
+  }
+  .ff-cmp__cell--us:hover .ff-cmp__tip {
+    display: block;
+  }
+
+  /* === Bottom Banner === */
+  .ff-cmp__banner {
+    background: linear-gradient(135deg, var(--ff-prime) 0%, var(--ff-prime-dark) 100%);
+    padding: 32px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .ff-cmp__banner-text {
+    font-family: 'Halant', Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ff-white);
+    line-height: 1.3;
+  }
+  .ff-cmp__banner-text em {
+    color: var(--ff-second);
+    font-style: normal;
+  }
+  .ff-cmp__banner-cta {
+    display: inline-block;
+    padding: 14px 32px;
+    font-family: 'Halant', Georgia, serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ff-prime);
+    background: var(--ff-second);
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .ff-cmp__banner-cta:hover {
+    background: #f9bf6a;
+    transform: translateY(-1px);
+    color: var(--ff-prime);
+    text-decoration: none;
+  }
+
+  /* === Score Bar === */
+  .ff-cmp__score {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr;
+    background: var(--ff-quint);
+    border-top: 2px solid var(--ff-quint);
+  }
+  .ff-cmp__score-cell {
+    padding: 16px 24px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .ff-cmp__score-cell:first-child {
+    color: var(--ff-tert);
+    text-align: left;
+  }
+  .ff-cmp__score-cell--them {
+    color: var(--ff-red);
+  }
+  .ff-cmp__score-cell--us {
+    color: var(--ff-green);
+    background: rgba(40,167,69,0.06);
+  }
+
+  /* === Responsive === */
+  @media (max-width: 700px) {
+    .ff-cmp { padding: 48px 12px; }
+    .ff-cmp__heading { font-size: 24px; }
+    .ff-cmp__thead,
+    .ff-cmp__row,
+    .ff-cmp__score {
+      grid-template-columns: 1.2fr 1fr 1fr;
+    }
+    .ff-cmp__thead-cell,
+    .ff-cmp__cell,
+    .ff-cmp__score-cell {
+      padding: 14px 10px;
+      font-size: 12px;
+    }
+    .ff-cmp__cell--category { font-size: 13px; }
+    .ff-cmp__cell--category svg { display: none; }
+    .ff-cmp__mark--bad, .ff-cmp__mark--good { font-size: 11px; gap: 4px; }
+    .ff-cmp__mark--bad::before, .ff-cmp__mark--good::before {
+      width: 20px; height: 20px; font-size: 11px;
+    }
+    .ff-cmp__banner {
+      flex-direction: column;
+      text-align: center;
+      padding: 28px 20px;
+    }
+    .ff-cmp__banner-text { font-size: 17px; }
+    .ff-cmp__tip { display: none !important; }
+  }
+</style>
+
+<section class="ff-cmp" aria-label="Comparison">
+  <div class="ff-cmp__header">
+    <div class="ff-cmp__badge">See the Difference</div>
+    <h2 class="ff-cmp__heading">The Fullman Firm vs. Debt Settlement <em>Companies</em></h2>
+    <p class="ff-cmp__subheading">Not all debt help is created equal. See why a licensed law firm gives you a real advantage over unlicensed debt settlement companies.</p>
+  </div>
+
+  <div class="ff-cmp__table-wrap">
+    <!-- Header -->
+    <div class="ff-cmp__thead">
+      <div class="ff-cmp__thead-cell">Category</div>
+      <div class="ff-cmp__thead-cell ff-cmp__thead-cell--them">Settlement Companies</div>
+      <div class="ff-cmp__thead-cell ff-cmp__thead-cell--us">
+        <span class="ff-cmp__winner-tag">WINNER</span>
+        The Fullman Firm
+      </div>
+    </div>
+
+    <!-- Row 1 -->
+    <div class="ff-cmp__row" data-ff-row>
+      <div class="ff-cmp__cell ff-cmp__cell--category">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        Licensed & Regulated?
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--them">
+        <span class="ff-cmp__mark--bad">Often unlicensed</span>
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--us">
+        <span class="ff-cmp__mark--good">CA State Bar licensed</span>
+        <div class="ff-cmp__tip">The Fullman Firm is licensed and regulated by the California State Bar — one of the most stringent regulatory bodies in the country.</div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="ff-cmp__row" data-ff-row>
+      <div class="ff-cmp__cell ff-cmp__cell--category">
+        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+        Court Representation?
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--them">
+        <span class="ff-cmp__mark--bad">Cannot represent you</span>
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--us">
+        <span class="ff-cmp__mark--good">Full legal representation</span>
+        <div class="ff-cmp__tip">Our attorneys can file motions, appear in court on your behalf, and aggressively defend you — something no debt settlement company can do.</div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="ff-cmp__row" data-ff-row>
+      <div class="ff-cmp__cell ff-cmp__cell--category">
+        <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+        Fee Structure
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--them">
+        <span class="ff-cmp__mark--bad">High upfront + hidden fees</span>
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--us">
+        <span class="ff-cmp__mark--good">Small flat fee + success-based</span>
+        <div class="ff-cmp__tip">We charge a small flat fee and only profit when we save you money. No hidden fees, no surprises — we put our skin in the game with you.</div>
+      </div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="ff-cmp__row" data-ff-row>
+      <div class="ff-cmp__cell ff-cmp__cell--category">
+        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+        Timeline
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--them">
+        <span class="ff-cmp__mark--bad">3–4 years, often longer</span>
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--us">
+        <span class="ff-cmp__mark--good">Case-by-case, often faster</span>
+        <div class="ff-cmp__tip">We handle each case individually and aggressively pursue resolution. Many cases are resolved in weeks or months — not years.</div>
+      </div>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="ff-cmp__row" data-ff-row>
+      <div class="ff-cmp__cell ff-cmp__cell--category">
+        <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        Credit Impact
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--them">
+        <span class="ff-cmp__mark--bad">Devastating to your credit</span>
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--us">
+        <span class="ff-cmp__mark--good">Minimized impact</span>
+        <div class="ff-cmp__tip">Debt settlement companies tell you to stop paying — destroying your credit. Our legal strategies focus on minimizing damage and clearing derogatory marks.</div>
+      </div>
+    </div>
+
+    <!-- Row 6 -->
+    <div class="ff-cmp__row" data-ff-row>
+      <div class="ff-cmp__cell ff-cmp__cell--category">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V8h16v12z"/></svg>
+        Lawsuit Defense
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--them">
+        <span class="ff-cmp__mark--bad">Cannot defend lawsuits</span>
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--us">
+        <span class="ff-cmp__mark--good">Full lawsuit defense</span>
+        <div class="ff-cmp__tip">If a creditor sues you while enrolled with a settlement company, they can't help you. Our attorneys fight the lawsuit directly — and often win dismissals.</div>
+      </div>
+    </div>
+
+    <!-- Row 7 -->
+    <div class="ff-cmp__row" data-ff-row>
+      <div class="ff-cmp__cell ff-cmp__cell--category">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg>
+        Creditor Communication
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--them">
+        <span class="ff-cmp__mark--bad">You still get harassed</span>
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--us">
+        <span class="ff-cmp__mark--good">We handle everything</span>
+        <div class="ff-cmp__tip">Once we represent you, all creditor and collector communication goes through us. The harassing calls stop — that's the law.</div>
+      </div>
+    </div>
+
+    <!-- Row 8 -->
+    <div class="ff-cmp__row" data-ff-row>
+      <div class="ff-cmp__cell ff-cmp__cell--category">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Accountability
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--them">
+        <span class="ff-cmp__mark--bad">No guarantees, may worsen debt</span>
+      </div>
+      <div class="ff-cmp__cell ff-cmp__cell--us">
+        <span class="ff-cmp__mark--good">Licensed attorneys fighting for you</span>
+        <div class="ff-cmp__tip">As licensed attorneys, we're held to the highest ethical standards by the California State Bar. We have a fiduciary duty to act in your best interest.</div>
+      </div>
+    </div>
+
+    <!-- Score Row -->
+    <div class="ff-cmp__score">
+      <div class="ff-cmp__score-cell">Score</div>
+      <div class="ff-cmp__score-cell ff-cmp__score-cell--them">0 / 8</div>
+      <div class="ff-cmp__score-cell ff-cmp__score-cell--us">8 / 8 ★</div>
+    </div>
+
+    <!-- Banner CTA -->
+    <div class="ff-cmp__banner">
+      <div class="ff-cmp__banner-text">
+        Don't settle for a settlement company.<br>
+        Get <em>real legal protection</em> with The Fullman Firm.
+      </div>
+      <a href="tel:+18666207575" class="ff-cmp__banner-cta">
+        Call (866) 620-7575
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var rows = document.querySelectorAll('[data-ff-row]');
+  var animated = false;
+
+  function revealRows() {
+    if (animated) return;
+    var firstRow = rows[0];
+    if (!firstRow) return;
+    var rect = firstRow.getBoundingClientRect();
+    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.top < windowHeight * 0.9) {
+      animated = true;
+      rows.forEach(function(row, i) {
+        setTimeout(function() {
+          row.classList.add('ff-cmp__row--visible');
+        }, i * 120);
+      });
+    }
+  }
+
+  window.addEventListener('scroll', revealRows, { passive: true });
+  window.addEventListener('load', revealRows);
+  setTimeout(revealRows, 500);
+})();
+</script>
+</div>
