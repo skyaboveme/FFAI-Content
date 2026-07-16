@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debt Savings Calculator | The Fullman Firm — See How Much You Could Save</title>
+  <meta name="description" content="Use our free debt savings calculator to estimate how much The Fullman Firm could save you. Adjust your debt amount and type to see real-time settlement estimates.">
+  <meta property="og:title" content="Debt Savings Calculator | The Fullman Firm">
+  <meta property="og:description" content="Estimate your potential savings with California's top debt defense attorneys. Free, instant results — no sign-up required.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Halant:wght@500;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ff-prime: #084b52;
+      --ff-prime-dark: #063a40;
+      --ff-second: #facb86;
+      --ff-second-light: #fde8c8;
+      --ff-tert: #6a6a6a;
+      --ff-quart: #cccccc;
+      --ff-quint: #e6eced;
+      --ff-white: #ffffff;
+      --ff-red: #d9534f;
+      --ff-green: #28a745;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--ff-tert);
+      background: var(--ff-white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* === TOPBAR === */
+    .ff-topbar {
+      background: var(--ff-prime-dark);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+    }
+    .ff-topbar a {
+      color: var(--ff-second);
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    .ff-topbar a:hover { color: var(--ff-second-light); }
+
+    /* === NAV === */
+    .ff-nav {
+      background: var(--ff-prime);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .ff-nav a {
+      color: rgba(255,255,255,0.75);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 6px 4px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .ff-nav a:hover, .ff-nav a.active {
+      color: var(--ff-second);
+      border-bottom-color: var(--ff-second);
+    }
+
+    /* === PAGE HERO === */
+    .ff-page-hero {
+      background: linear-gradient(135deg, var(--ff-prime) 0%, var(--ff-prime-dark) 100%);
+      padding: 72px 24px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .ff-page-hero::before {
+      content: '';
+      position: absolute;
+      top: -80%;
+      right: -15%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(250,203,134,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .ff-page-hero__badge {
+      display: inline-block;
+      background: rgba(250,203,134,0.15);
+      color: var(--ff-second);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .ff-page-hero__title {
+      font-family: 'Halant', Georgia, serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--ff-white);
+      line-height: 1.15;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .ff-page-hero__title em {
+      color: var(--ff-second);
+      font-style: normal;
+    }
+    .ff-page-hero__sub {
+      font-size: 18px;
+      color: rgba(255,255,255,0.7);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === CONTENT SECTION === */
+    .ff-content {
+      background: linear-gradient(180deg, #f4f6f8 0%, var(--ff-white) 100%);
+      padding: 72px 24px 80px;
+    }
+    .ff-content__inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* === BOTTOM CTA === */
+    .ff-bottom-cta {
+      background: linear-gradient(135deg, var(--ff-prime) 0%, var(--ff-prime-dark) 100%);
+      padding: 64px 24px;
+      text-align: center;
+    }
+    .ff-bottom-cta__title {
+      font-family: 'Halant', Georgia, serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--ff-white);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .ff-bottom-cta__sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 28px;
+    }
+    .ff-bottom-cta__btn {
+      display: inline-block;
+      padding: 18px 48px;
+      font-family: 'Halant', Georgia, serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ff-prime);
+      background: var(--ff-second);
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(250,203,134,0.4);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .ff-bottom-cta__btn:hover {
+      background: #f9bf6a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(250,203,134,0.5);
+    }
+    .ff-bottom-cta__phone {
+      display: block;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+      margin-top: 14px;
+    }
+
+    /* === FOOTER === */
+    .ff-footer {
+      background: #041f23;
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+    .ff-footer a {
+      color: var(--ff-second);
+      text-decoration: underline;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .ff-page-hero { padding: 48px 20px 40px; }
+      .ff-page-hero__title { font-size: 30px; }
+      .ff-page-hero__sub { font-size: 16px; }
+      .ff-content { padding: 48px 16px 56px; }
+      .ff-bottom-cta { padding: 48px 20px; }
+      .ff-bottom-cta__title { font-size: 26px; }
+      .ff-nav { gap: 16px; padding: 12px 16px; }
+      .ff-nav a { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="ff-topbar">
+  <span>California's Premier Debt Protection Law Firm</span>
+  <a href="tel:+18666207575">📞 (866) 620-7575 — Free Consultation</a>
+</div>
+
+<!-- Navigation -->
+<nav class="ff-nav">
+  <a href="../landing-page.html">Home</a>
+  <a href="calculator.html" class="active">Calculator</a>
+  <a href="stats.html">Our Results</a>
+  <a href="timeline.html">How It Works</a>
+  <a href="comparison.html">Compare</a>
+</nav>
+
+<!-- Page Hero -->
+<section class="ff-page-hero">
+  <div class="ff-page-hero__badge">Free Savings Estimate</div>
+  <h1 class="ff-page-hero__title">See How Much You Could <em>Save</em></h1>
+  <p class="ff-page-hero__sub">Adjust the slider and select your debt type below to get an instant estimate of what The Fullman Firm could save you. No sign-up required.</p>
+</section>
+
+<!-- Calculator Component -->
+<section class="ff-content">
+  <div class="ff-content__inner">
+    <!-- BEGIN COMPONENT -->
+    <div id="ff-calc-root">
+<style>
+  #ff-calc-root {
+    --ff-prime: #084b52;
+    --ff-prime-dark: #063a40;
+    --ff-second: #facb86;
+    --ff-second-light: #fde8c8;
+    --ff-tert: #6a6a6a;
+    --ff-quart: #cccccc;
+    --ff-quint: #e6eced;
+    --ff-white: #ffffff;
+    --ff-red: #d9534f;
+    --ff-green: #28a745;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  #ff-calc-root *, #ff-calc-root *::before, #ff-calc-root *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  .ff-calc { background: var(--ff-white); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(8,75,82,0.12), 0 2px 8px rgba(0,0,0,0.06); }
+  .ff-calc__header { background: linear-gradient(135deg, var(--ff-prime) 0%, var(--ff-prime-dark) 100%); padding: 36px 40px 32px; text-align: center; position: relative; overflow: hidden; }
+  .ff-calc__header::before { content: ''; position: absolute; top: -60%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(250,203,134,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .ff-calc__header::after { content: ''; position: absolute; bottom: -40%; left: -10%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(250,203,134,0.06) 0%, transparent 70%); border-radius: 50%; }
+  .ff-calc__icon { width: 56px; height: 56px; margin: 0 auto 16px; background: rgba(250,203,134,0.15); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+  .ff-calc__icon svg { width: 28px; height: 28px; fill: var(--ff-second); }
+  .ff-calc__title { font-family: 'Halant', Georgia, serif; font-size: 28px; font-weight: 600; color: var(--ff-white); margin-bottom: 8px; position: relative; z-index: 1; line-height: 1.2; }
+  .ff-calc__subtitle { font-size: 15px; color: rgba(255,255,255,0.75); position: relative; z-index: 1; line-height: 1.5; }
+  .ff-calc__body { padding: 36px 40px; }
+  .ff-calc__group { margin-bottom: 32px; }
+  .ff-calc__label { display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 700; color: var(--ff-prime); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 14px; }
+  .ff-calc__label-value { font-family: 'Halant', Georgia, serif; font-size: 32px; font-weight: 600; color: var(--ff-prime); letter-spacing: 0; text-transform: none; }
+  .ff-calc__slider-wrap { position: relative; padding: 8px 0; }
+  .ff-calc__slider { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 4px; background: linear-gradient(to right, var(--ff-second) 0%, var(--ff-second) var(--slider-pct, 25%), var(--ff-quint) var(--slider-pct, 25%), var(--ff-quint) 100%); outline: none; cursor: pointer; transition: background 0.1s; }
+  .ff-calc__slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 28px; height: 28px; border-radius: 50%; background: var(--ff-prime); border: 4px solid var(--ff-white); box-shadow: 0 2px 8px rgba(8,75,82,0.3); cursor: grab; transition: transform 0.15s, box-shadow 0.15s; }
+  .ff-calc__slider::-webkit-slider-thumb:hover { transform: scale(1.15); box-shadow: 0 4px 16px rgba(8,75,82,0.35); }
+  .ff-calc__slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); }
+  .ff-calc__slider::-moz-range-thumb { width: 28px; height: 28px; border-radius: 50%; background: var(--ff-prime); border: 4px solid var(--ff-white); box-shadow: 0 2px 8px rgba(8,75,82,0.3); cursor: grab; }
+  .ff-calc__slider-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--ff-tert); }
+  .ff-calc__select-wrap { position: relative; }
+  .ff-calc__select-wrap::after { content: ''; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--ff-prime); pointer-events: none; }
+  .ff-calc__select { width: 100%; padding: 14px 44px 14px 18px; font-size: 16px; font-family: 'Lato', sans-serif; color: var(--ff-prime); background: var(--ff-quint); border: 2px solid transparent; border-radius: 10px; appearance: none; -webkit-appearance: none; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+  .ff-calc__select:focus { outline: none; border-color: var(--ff-second); box-shadow: 0 0 0 3px rgba(250,203,134,0.3); }
+  .ff-calc__results { background: linear-gradient(135deg, #f8fbfc 0%, var(--ff-quint) 100%); border-radius: 14px; padding: 32px; margin-top: 8px; border: 1px solid rgba(8,75,82,0.08); }
+  .ff-calc__results-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+  .ff-calc__result-card { text-align: center; padding: 20px 12px; background: var(--ff-white); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
+  .ff-calc__result-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .ff-calc__result-card--savings { border: 2px solid var(--ff-second); position: relative; }
+  .ff-calc__result-card--savings::before { content: '\2605  YOUR SAVINGS'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--ff-second); color: var(--ff-prime); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 12px; border-radius: 10px; white-space: nowrap; }
+  .ff-calc__result-icon { width: 40px; height: 40px; margin: 0 auto 10px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .ff-calc__result-icon--settlement { background: rgba(8,75,82,0.1); }
+  .ff-calc__result-icon--savings { background: rgba(250,203,134,0.25); }
+  .ff-calc__result-icon--monthly { background: rgba(40,167,69,0.1); }
+  .ff-calc__result-icon svg { width: 20px; height: 20px; }
+  .ff-calc__result-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ff-tert); margin-bottom: 6px; }
+  .ff-calc__result-value { font-family: 'Halant', Georgia, serif; font-size: 28px; font-weight: 600; color: var(--ff-prime); line-height: 1.1; }
+  .ff-calc__result-card--savings .ff-calc__result-value { color: var(--ff-prime); }
+  .ff-calc__result-sub { font-size: 12px; color: var(--ff-tert); margin-top: 4px; }
+  .ff-calc__cta { display: block; width: 100%; padding: 18px 24px; font-family: 'Halant', Georgia, serif; font-size: 18px; font-weight: 600; text-align: center; color: var(--ff-prime); background: var(--ff-second); border: none; border-radius: 12px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(250,203,134,0.4); }
+  .ff-calc__cta:hover { background: #f9bf6a; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(250,203,134,0.5); color: var(--ff-prime); text-decoration: none; }
+  .ff-calc__cta:active { transform: translateY(0); }
+  .ff-calc__cta-sub { display: block; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 400; opacity: 0.8; margin-top: 2px; }
+  .ff-calc__disclaimer { text-align: center; font-size: 11px; color: var(--ff-tert); margin-top: 16px; line-height: 1.5; padding: 0 20px; }
+  @media (max-width: 640px) {
+    .ff-calc__header { padding: 28px 24px 24px; }
+    .ff-calc__title { font-size: 22px; }
+    .ff-calc__body { padding: 28px 24px; }
+    .ff-calc__label-value { font-size: 26px; }
+    .ff-calc__results { padding: 24px 16px; }
+    .ff-calc__results-grid { grid-template-columns: 1fr; gap: 16px; }
+    .ff-calc__result-card { padding: 16px 12px; }
+    .ff-calc__result-value { font-size: 24px; }
+    .ff-calc__cta { font-size: 16px; padding: 16px 20px; }
+  }
+  @keyframes ff-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+  .ff-calc__result-value[data-animating] { animation: ff-pulse 0.3s ease; }
+</style>
+
+<div class="ff-calc">
+  <div class="ff-calc__header">
+    <div class="ff-calc__icon">
+      <svg viewBox="0 0 24 24"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"/></svg>
+    </div>
+    <div class="ff-calc__title">Debt Savings Calculator</div>
+    <div class="ff-calc__subtitle">Estimate your potential savings with The Fullman Firm</div>
+  </div>
+  <div class="ff-calc__body">
+    <div class="ff-calc__group">
+      <div class="ff-calc__label">
+        <span>Total Debt</span>
+        <span class="ff-calc__label-value" id="ffDebtDisplay">$50,000</span>
+      </div>
+      <div class="ff-calc__slider-wrap">
+        <input type="range" class="ff-calc__slider" id="ffDebtSlider" min="1000" max="200000" step="500" value="50000">
+      </div>
+      <div class="ff-calc__slider-labels"><span>$1,000</span><span>$200,000</span></div>
+    </div>
+    <div class="ff-calc__group">
+      <div class="ff-calc__label"><span>Type of Debt</span></div>
+      <div class="ff-calc__select-wrap">
+        <select class="ff-calc__select" id="ffDebtType">
+          <option value="credit_card">Credit Card Debt</option>
+          <option value="medical">Medical Debt</option>
+          <option value="student">Student Loan Debt</option>
+          <option value="auto">Auto Loan / Deficiency</option>
+          <option value="personal">Personal Loan</option>
+          <option value="other">Other Debt</option>
+        </select>
+      </div>
+    </div>
+    <div class="ff-calc__results">
+      <div class="ff-calc__results-grid">
+        <div class="ff-calc__result-card">
+          <div class="ff-calc__result-icon ff-calc__result-icon--settlement"><svg viewBox="0 0 24 24" fill="#084b52"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
+          <div class="ff-calc__result-label">Settlement</div>
+          <div class="ff-calc__result-value" id="ffSettlement">$22,500</div>
+          <div class="ff-calc__result-sub">What you may pay</div>
+        </div>
+        <div class="ff-calc__result-card ff-calc__result-card--savings">
+          <div class="ff-calc__result-icon ff-calc__result-icon--savings"><svg viewBox="0 0 24 24" fill="#084b52"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
+          <div class="ff-calc__result-label">Your Savings</div>
+          <div class="ff-calc__result-value" id="ffSavings">$27,500</div>
+          <div class="ff-calc__result-sub">Money saved</div>
+        </div>
+        <div class="ff-calc__result-card">
+          <div class="ff-calc__result-icon ff-calc__result-icon--monthly"><svg viewBox="0 0 24 24" fill="#28a745"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg></div>
+          <div class="ff-calc__result-label">Monthly</div>
+          <div class="ff-calc__result-value" id="ffMonthly">$938</div>
+          <div class="ff-calc__result-sub">Over 24 months</div>
+        </div>
+      </div>
+      <a href="tel:+18666207575" class="ff-calc__cta">
+        Get Your Free Consultation — Call Now
+        <span class="ff-calc__cta-sub">📞 (866) 620-7575 · No obligation</span>
+      </a>
+    </div>
+    <div class="ff-calc__disclaimer">* Results are estimates only and do not guarantee a specific outcome. Actual savings depend on the creditor, the age and type of debt, and other factors. Contact The Fullman Firm for a free, personalized case evaluation.</div>
+  </div>
+</div>
+</div>
+    <!-- END COMPONENT -->
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="ff-bottom-cta">
+  <h2 class="ff-bottom-cta__title">Ready to Fight Back Against Debt?</h2>
+  <p class="ff-bottom-cta__sub">Your free consultation is just a phone call away.</p>
+  <a href="tel:+18666207575" class="ff-bottom-cta__btn">Call for Free Consultation</a>
+  <span class="ff-bottom-cta__phone">📞 (866) 620-7575 · No obligation</span>
+</section>
+
+<!-- Footer -->
+<footer class="ff-footer">
+  <p>&copy; 2025 The Fullman Firm. All rights reserved. | <a href="https://www.fullmanfirm.com/">fullmanfirm.com</a></p>
+  <p style="margin-top:6px;">This website is for informational purposes only and does not constitute legal advice.</p>
+</footer>
+
+<script>
+(function() {
+  var slider = document.getElementById('ffDebtSlider');
+  var display = document.getElementById('ffDebtDisplay');
+  var typeSelect = document.getElementById('ffDebtType');
+  var settlementEl = document.getElementById('ffSettlement');
+  var savingsEl = document.getElementById('ffSavings');
+  var monthlyEl = document.getElementById('ffMonthly');
+  var rates = {
+    credit_card: { low: 0.35, high: 0.55 },
+    medical: { low: 0.20, high: 0.40 },
+    student: { low: 0.50, high: 0.70 },
+    auto: { low: 0.40, high: 0.60 },
+    personal: { low: 0.40, high: 0.60 },
+    other: { low: 0.40, high: 0.60 }
+  };
+  function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function animateValue(el, newText) {
+    el.setAttribute('data-animating', '');
+    el.textContent = newText;
+    setTimeout(function() { el.removeAttribute('data-animating'); }, 300);
+  }
+  function updateSliderTrack() {
+    var pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+    slider.style.setProperty('--slider-pct', pct + '%');
+  }
+  function calculate() {
+    var debt = parseInt(slider.value);
+    var type = typeSelect.value;
+    var rate = rates[type];
+    var avgRate = (rate.low + rate.high) / 2;
+    var settlement = debt * avgRate;
+    var savings = debt - settlement;
+    var monthly = settlement / 24;
+    display.textContent = fmt(debt);
+    animateValue(settlementEl, fmt(settlement));
+    animateValue(savingsEl, fmt(savings));
+    animateValue(monthlyEl, fmt(monthly));
+    updateSliderTrack();
+  }
+  slider.addEventListener('input', calculate);
+  typeSelect.addEventListener('change', calculate);
+  calculate();
+})();
+</script>
+
+</body>
+</html>
